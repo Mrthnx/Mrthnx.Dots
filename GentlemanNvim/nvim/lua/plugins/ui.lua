@@ -1,24 +1,37 @@
 -- This file contains the configuration for various UI-related plugins in Neovim.
+vim.api.nvim_set_hl(0, "SnacksDashboardHeader", { fg = "#c34043", bold = true }) -- color kanagawa dragon red
+
+local actions = require("fzf-lua.actions")
+
 return {
   -- Plugin: folke/todo-comments.nvim
   -- URL: https://github.com/folke/todo-comments.nvim
-  -- Description: Plugin to highlight and search for TODO, FIX, HACK, etc. comments in your code.
+  -- Description: Plugin para resaltar y buscar comentarios TODO, FIX, HACK, etc. en tu código.
   -- IMPORTANT: using version "*" to fix a bug
   { "folke/todo-comments.nvim", version = "*" },
-
-  -- Plugin: folke/which-key.nvim
-  -- URL: https://github.com/folke/which-key.nvim
-  -- Description: Plugin to show a popup with available keybindings.
-  -- IMPORTANT: using event "VeryLazy" to optimize loading time
+  -- Plugin: fzf-lua
+  -- URL: https://github.com/ibhagwan/fzf-lua
+  -- Description: A Neovim plugin for fuzzy finding files, buffers, and more.
   {
-    "folke/which-key.nvim",
-    event = "VeryLazy",
-    opts = {
-      preset = "classic",
-      win = { border = "single" },
-    },
-  },
+    "ibhagwan/fzf-lua",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = function(_, opts)
+      opts.winopts = {
+        border = "none",
+      }
+      opts.files["actions"] = {
+        ["ctrl-i"] = { actions.toggle_ignore },
+        ["ctrl-h"] = { actions.toggle_hidden },
+        ["ctrl-g"] = false,
+      }
 
+      opts.grep["actions"] = {
+        ["ctrl-i"] = { actions.toggle_ignore },
+        ["ctrl-h"] = { actions.toggle_hidden },
+        ["ctrl-g"] = false,
+      }
+    end,
+  },
   -- Plugin: noice.nvim
   -- URL: https://github.com/folke/noice.nvim
   -- Description: A Neovim plugin for enhancing the command-line UI.
@@ -69,7 +82,7 @@ return {
     requires = { "nvim-tree/nvim-web-devicons", opt = true }, -- Optional dependency for icons
     opts = {
       options = {
-        theme = "oldworld", -- Set the theme for lualine
+        theme = "auto", -- Set the theme for lualine
         icons_enabled = true, -- Enable icons in the statusline
       },
       sections = {
@@ -113,24 +126,24 @@ return {
   -- URL: https://github.com/echasnovski/mini.nvim
   -- Description: A collection of minimal, fast, and modular Lua plugins for Neovim.
   {
-    "echasnovski/mini.nvim",
-    version = false, -- Use the latest version
-    config = function()
-      require("mini.animate").setup({
-        resize = {
-          enable = false, -- Disable resize animations
-        },
-        open = {
-          enable = false, -- Disable open animations
-        },
-        close = {
-          enable = false, -- Disable close animations
-        },
-        scroll = {
-          enable = false, -- Disable scroll animations
-        },
-      })
-    end,
+    -- "echasnovski/mini.nvim",
+    -- version = false, -- Use the latest version
+    -- config = function()
+    --   require("mini.animate").setup({
+    --     resize = {
+    --       enable = false, -- Disable resize animations
+    --     },
+    --     open = {
+    --       enable = false, -- Disable open animations
+    --     },
+    --     close = {
+    --       enable = false, -- Disable close animations
+    --     },
+    --     scroll = {
+    --       enable = false, -- Disable scroll animations
+    --     },
+    --   })
+    -- end,
   },
 
   -- Plugin: zen-mode.nvim
@@ -147,7 +160,7 @@ return {
         twilight = { enabled = true }, -- Enable twilight integration
       },
     },
-    keys = { { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen Mode" } }, -- Keybinding to toggle Zen Mode
+    keys = { { "<leader>5", "<cmd>ZenMode<cr>", desc = "Zen Mode" } }, -- Keybinding to toggle Zen Mode
   },
 
   -- Plugin: snacks.nvim
@@ -156,63 +169,36 @@ return {
   {
     "folke/snacks.nvim",
     opts = {
-      image = {},
-      picker = {
-        matcher = {
-          fuzzy = true,
-          smartcase = true,
-          ignorecase = true,
-          filename_bonus = true,
-        },
-        sources = {
-          explorer = {
-            matcher = {
-              fuzzy = true, -- Enables fuzzy matching, so you can be a bit imprecise with your search terms
-              smartcase = true, -- If your search term has uppercase letters, the search becomes case-sensitive
-              ignorecase = true, -- Ignores case when searching, unless smartcase is triggered
-              filename_bonus = true, -- Gives a higher priority to matches in filenames
-              sort_empty = false, -- If no matches are found, it won't sort the results
-            },
-          },
-        },
-      },
       dashboard = {
-        sections = {
-          { section = "header" },
-          { icon = " ", title = "Keymaps", section = "keys", indent = 2, padding = 1 },
-          { icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
-          { icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
-          { section = "startup" },
-        },
         preset = {
-          header = [[
-                    ░░░░░░      ░░░░░░                        
-                  ░░░░░░░░░░  ░░░░░░░░░░                      
-                ░░░░░░░░░░░░░░░░░░░░░░░░░░                    
-              ░░░░░░░░░░▒▒▒▒░░▒▒▒▒░░░░░░░░░░                  
-  ░░░░      ░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░        ░░░░    
-▒▒░░      ░░░░░░▒▒▒▒▒▒▒▒▒▒██▒▒██▒▒▒▒▒▒▒▒▒▒░░░░░░        ▒▒░░  
-▒▒░░    ░░░░░░░░▒▒▒▒▒▒▒▒▒▒████▒▒████▒▒▒▒▒▒▒▒▒▒░░░░░░░░  ▒▒░░▒ 
-▒▒▒▒░░░░░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒██████▒▒██████▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░▒▒▒ 
-██▒▒▒▒▒▒▒▒▒▒▒▒▒▒██▒▒▒▒██████▓▓██▒▒██████▒▒▓▓██▒▒▒▒▒▒▒▒▒▒▒▒▒▒█ 
-████▒▒▒▒▒▒████▒▒▒▒██████████  ██████████▒▒▒▒████▒▒▒▒▒▒▒▒██    
-  ████████████████████████      ████████████████████████      
-    ██████████████████              ██████████████████        
-        ██████████                      ██████████            
-]],
-          -- stylua: ignore
-          ---@type snacks.dashboard.Item[]
-          keys = {
-            { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
-            { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
-            { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
-            { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
-            { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
-            { icon = " ", key = "s", desc = "Restore Session", section = "session" },
-            { icon = " ", key = "x", desc = "Lazy Extras", action = ":LazyExtras" },
-            { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },
-            { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+          sections = {
+            { section = "header" },
+            { icon = " ", title = "Keymaps", section = "keys", indent = 2, padding = 1 },
+            { icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
+            { icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
+            { section = "startup" },
           },
+          header = [[
+███╗   ███╗██████╗ ████████╗██╗  ██╗███╗   ██╗██╗  ██╗
+████╗ ████║██╔══██╗╚══██╔══╝██║  ██║████╗  ██║╚██╗██╔╝
+██╔████╔██║██████╔╝   ██║   ███████║██╔██╗ ██║ ╚███╔╝ 
+██║╚██╔╝██║██╔══██╗   ██║   ██╔══██║██║╚██╗██║ ██╔██╗ 
+██║ ╚═╝ ██║██║  ██║   ██║   ██║  ██║██║ ╚████║██╔╝ ██╗
+╚═╝     ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝
+      ]],
+        -- stylua: ignore
+        ---@type snacks.dashboard.Item[]
+        keys = {
+          { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
+          { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
+          { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
+          { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+          { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
+          { icon = " ", key = "s", desc = "Restore Session", section = "session" },
+          { icon = " ", key = "x", desc = "Lazy Extras", action = ":LazyExtras" },
+          { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },
+          { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+        },
         },
       },
     },

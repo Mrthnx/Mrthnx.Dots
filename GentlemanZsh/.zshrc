@@ -30,7 +30,15 @@ fi
 # Usar la variable BREW_BIN donde se necesite
 eval "$($BREW_BIN/brew shellenv)"
 
-source $(dirname $BREW_BIN)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+
+# Async mode for autocompletion
+ZSH_AUTOSUGGEST_USE_ASYNC=true
+ZSH_HIGHLIGHT_MAXLENGTH=300
+
+# ZSH_THEME="powerlevel10k/powerlevel10k"
+source $ZSH/oh-my-zsh.sh
+
+# source $(dirname $BREW_BIN)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 source $(dirname $BREW_BIN)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $(dirname $BREW_BIN)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $(dirname $BREW_BIN)/share/powerlevel10k/powerlevel10k.zsh-theme
@@ -40,9 +48,9 @@ export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
 export FZF_DEFAULT_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exlude .git"
 
-WM_VAR="/$TMUX"
+# WM_VAR="/$ZELLIJ"
 # change with ZELLIJ
-WM_CMD="tmux"
+# WM_CMD="zellij"
 # change with zellij
 
 function start_if_needed() {
@@ -60,17 +68,32 @@ plugins=(
   command-not-found
 )
 
-source $ZSH/oh-my-zsh.sh
 
-export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense'
-zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
-source <(carapace _carapace)
 
-eval "$(fzf --zsh)"
-eval "$(zoxide init zsh)"
-eval "$(atuin init zsh)"
+# export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense'
+# zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+# source <(carapace _carapace)
+#
+# eval "$(fzf --zsh)"
+# eval "$(zoxide init zsh)"
+# eval "$(atuin init zsh)"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+source ~/.alias.zsh
+
 start_if_needed
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# bun completions
+[ -s "/home/marthin/.bun/_bun" ] && source "/home/marthin/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+export ANDROID_HOME=$HOME/Android
+export PATH=$PATH:$ANDROID_HOME/cmdline-tools/bin:$ANDROID_HOME/platform-tools
