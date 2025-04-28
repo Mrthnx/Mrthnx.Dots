@@ -245,12 +245,12 @@ clone_repository_with_progress() {
 
 # Step 1: Clone the Repository
 echo -e "${YELLOW}Step 1: Clone the Repository${NC}"
-if [ -d "Gentleman.Dots" ]; then
+if [ -d "Mrthnx.Dots" ]; then
   echo -e "${GREEN}Repository already cloned. Overwriting...${NC}"
-  rm -rf "Gentleman.Dots"
+  rm -rf "Mrthnx.Dots"
 fi
-clone_repository_with_progress "https://github.com/Gentleman-Programming/Gentleman.Dots.git" "Gentleman.Dots" 20
-cd Gentleman.Dots || exit
+clone_repository_with_progress "https://github.com/Mrthnx/Mrthnx.Dots" "Mrthnx.Dots" 20
+cd Mrthnx.Dots || exit
 
 # Install Homebrew if not installed
 install_homebrew
