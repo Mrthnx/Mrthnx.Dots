@@ -31,11 +31,29 @@ return {
   config = true,
   opts = {
     adapters = {
-      copilot = function()
+      copilot_4o = function()
+        return require("codecompanion.adapters").extend("copilot", {
+          schema = {
+            model = {
+              default = "gpt-4o",
+            },
+          },
+        })
+      end,
+      copilot_41 = function()
         return require("codecompanion.adapters").extend("copilot", {
           schema = {
             model = {
               default = "gpt-4.1",
+            },
+          },
+        })
+      end,
+      copilot_gemini_25_pro = function()
+        return require("codecompanion.adapters").extend("copilot", {
+          schema = {
+            model = {
+              default = "gemini-2.5-pro",
             },
           },
         })

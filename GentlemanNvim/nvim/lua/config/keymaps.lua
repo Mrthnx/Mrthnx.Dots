@@ -28,6 +28,11 @@ vim.keymap.set({ "i", "n", "v" }, "<C-c>", [[<C-\><C-n>]])
 -- Quick semi
 vim.keymap.set("n", "<Leader>,", "$a,<Esc>", { noremap = true, silent = true })
 vim.keymap.set("n", "<Leader>;", "$a;<Esc>", { noremap = true, silent = true })
+-- Screen Keys
+vim.keymap.set({ "n" }, "<leader>uk", "<cmd>Screenkey<CR>")
+
+----- Tmux Navigation ------
+local nvim_tmux_nav = require("nvim-tmux-navigation")
 
 -- add 'word'
 vim.keymap.set("n", "<leader>q'", "ciw''<Esc>P", { noremap = true, silent = true })
@@ -35,6 +40,15 @@ vim.keymap.set("n", '<leader>q"', 'ciw""<Esc>P', { noremap = true, silent = true
 
 -- copy word
 vim.keymap.set("n", "<leader>cp", "ciw<Esc>u", { noremap = true, silent = true })
+----- OBSIDIAN -----
+vim.keymap.set("n", "<leader>oc", "<cmd>ObsidianCheck<CR>", { desc = "Obsidian Check Checkbox" })
+vim.keymap.set("n", "<leader>ot", "<cmd>ObsidianTemplate<CR>", { desc = "Insert Obsidian Template" })
+vim.keymap.set("n", "<leader>oo", "<cmd>Obsidian Open<CR>", { desc = "Open in Obsidian App" })
+vim.keymap.set("n", "<leader>ob", "<cmd>ObsidianBacklinks<CR>", { desc = "Show ObsidianBacklinks" })
+vim.keymap.set("n", "<leader>ol", "<cmd>ObsidianLinks<CR>", { desc = "Show ObsidianLinks" })
+vim.keymap.set("n", "<leader>on", "<cmd>ObsidianNew<CR>", { desc = "Create New Note" })
+vim.keymap.set("n", "<leader>os", "<cmd>ObsidianSearch<CR>", { desc = "Search Obsidian" })
+vim.keymap.set("n", "<leader>oq", "<cmd>ObsidianQuickSwitch<CR>", { desc = "Quick Switch" })
 
 -- delete word without clipboard
 vim.keymap.set("n", "<leader>z", '"_diw', { noremap = true, silent = true })
