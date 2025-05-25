@@ -7,4 +7,8 @@ return {
     "iamcco/markdown-preview.nvim",
     enabled = false,
   },
+  {
+    "yetone/avante.nvim",
+    enabled = false,
+  },
 }

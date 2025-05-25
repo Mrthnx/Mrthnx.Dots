@@ -662,9 +662,9 @@ echo -e "${YELLOW}Step 5: Choose and Install NVIM${NC}"
 install_nvim=$(select_option "Do you want to install Neovim?" "Yes" "No")
 
 if [ "$install_nvim" = "Yes" ]; then
-  OBSIDIAN_PATH="$HOME/.config/obsidian"
-  ensure_directory_exists "$OBSIDIAN_PATH" "true"
-  mkdir -p "$OBSIDIAN_PATH/templates"
+  # OBSIDIAN_PATH="$HOME/.config/obsidian"
+  # ensure_directory_exists "$OBSIDIAN_PATH" "true"
+  # mkdir -p "$OBSIDIAN_PATH/templates"
 
   install_dependencies_with_progress "brew install nvim node npm git gcc fzf fd ripgrep coreutils bat curl lazygit"
 
@@ -672,14 +672,14 @@ if [ "$install_nvim" = "Yes" ]; then
   run_command "mkdir -p ~/.config/nvim"
   run_command "cp -r GentlemanNvim/nvim/* ~/.config/nvim/"
 
-  echo -e "${YELLOW}Configuring Obsidian...${NC}"
-  obsidian_config_file="$HOME/.config/nvim/lua/plugins/obsidian.lua"
+  # echo -e "${YELLOW}Configuring Obsidian...${NC}"
+  # obsidian_config_file="$HOME/.config/nvim/lua/plugins/obsidian.lua"
 
-  if [ -f "$obsidian_config_file" ]; then
-    update_or_replace "$obsidian_config_file" "/your/notes/path" "path = '$OBSIDIAN_PATH'"
-  else
-    echo -e "${RED}Obsidian configuration file not found at $obsidian_config_file. Please check your setup.${NC}"
-  fi
+  # if [ -f "$obsidian_config_file" ]; then
+  #   update_or_replace "$obsidian_config_file" "/your/notes/path" "path = '$OBSIDIAN_PATH'"
+  # else
+  #   echo -e "${RED}Obsidian configuration file not found at $obsidian_config_file. Please check your setup.${NC}"
+  # fi
 fi
 
 # Clean up: Remove the cloned repository

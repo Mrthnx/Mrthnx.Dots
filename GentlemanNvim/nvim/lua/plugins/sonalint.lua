@@ -1,7 +1,7 @@
 return {
-  -- "schrieveslaach/sonarlint.nvim",
-  url = "https://gitlab.com/schrieveslaach/sonarlint.nvim.git",
-  dir = "/home/marthin/Developer/Personal/sonarlint.nvim",
+  "Lachira/sonarlint.nvim",
+  url = "https://gitlab.com/Lachira/sonarlint.nvim.git",
+  branch = "master",
   dependencies = { "neovim/nvim-lspconfig" },
   config = function()
     require("sonarlint").setup({
