@@ -666,11 +666,19 @@ if [ "$install_nvim" = "Yes" ]; then
   # ensure_directory_exists "$OBSIDIAN_PATH" "true"
   # mkdir -p "$OBSIDIAN_PATH/templates"
 
-  install_dependencies_with_progress "brew install nvim node npm git gcc fzf fd ripgrep coreutils bat curl lazygit"
+  install_dependencies_with_progress "brew install nvim node npm git gcc fzf fd ripgrep coreutils bat curl lazygit SergioRibera/tap/sss_code"
 
   echo -e "${YELLOW}Configuring Neovim...${NC}"
   run_command "mkdir -p ~/.config/nvim"
   run_command "cp -r GentlemanNvim/nvim/* ~/.config/nvim/"
+
+  # Validar si luarocks está instalado, si no instalar con cargo
+  if ! command -v luarocks &>/dev/null; then
+    echo -e "${YELLOW}Luarocks no está instalado. Instalando con cargo...${NC}"
+    cargo install luarocks
+  else
+    echo -e "${GREEN}Luarocks ya está instalado.${NC}"
+  fi
 
   # echo -e "${YELLOW}Configuring Obsidian...${NC}"
   # obsidian_config_file="$HOME/.config/nvim/lua/plugins/obsidian.lua"
